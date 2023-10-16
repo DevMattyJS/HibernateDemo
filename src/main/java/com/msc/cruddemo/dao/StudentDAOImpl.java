@@ -17,8 +17,8 @@ public class StudentDAOImpl implements StudentDAO {
 
     // define field for entity manager
     private EntityManager entityManager;
-    // inject entity manager using constructor injection
 
+    // inject entity manager using constructor injection
     @Autowired
     public StudentDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -27,6 +27,7 @@ public class StudentDAOImpl implements StudentDAO {
     // implement save method
     // @Transactional - provided by Spring framework
     //                - automatically start and end a transaction behind the scenes (no need to do it manually)
+    //                - should be used just with queries, that changing data in our database
     @Override
     @Transactional
     public void save(Student student) {
@@ -63,5 +64,11 @@ public class StudentDAOImpl implements StudentDAO {
 
         // return query result
         return query.getResultList();
+    }
+
+    @Override
+    @Transactional
+    public void update(Student student) {
+        entityManager.merge(student);
     }
 }

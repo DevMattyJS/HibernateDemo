@@ -26,8 +26,32 @@ public class CruddemoApplication {
 //			createMultipleStudents(studentDAO);
 //			readStudent(studentDAO, 3);
 //			queryForStudents(studentDAO);
-			queryForStudentsByLastName(studentDAO, "Doe");
+//			queryForStudentsByLastName(studentDAO, "Doe");
+			updateStudentsEmail(studentDAO, 1, "john.d@email.com");
 		};
+	}
+
+	private void updateStudentsEmail(StudentDAO studentDAO, int studentId, String newEmail) {
+
+		// retrieve student based on id: primary key
+		Student student = studentDAO.findById(studentId);
+
+		// check if student exist
+		if (student == null) {
+			System.out.printf("Student with id %d wasn't found.\n", studentId);
+			return;
+		}
+
+		// change students email address to a new one
+		System.out.println("Updating student: " + student);
+		student.setEmail(newEmail);
+
+		// update the student
+		studentDAO.update(student);
+
+		// display updated student
+		System.out.println("Updated student: " + student);
+
 	}
 
 	private void queryForStudentsByLastName(StudentDAO studentDAO, String lastName) {
